@@ -31,8 +31,8 @@ rule token = parse
 and control_sequence l = parse
     | "?1h"             { token lexbuf }
     | "?1l"             { token lexbuf }
-    | 'K'               { token lexbuf }
-    | 'J'               { token lexbuf }
+    | 'K'               { ERRASE_K }
+    | 'J'               { ERRASE_J }
     | (digit+ as n) ';' { control_sequence (int_of_string n::l) lexbuf }
     | digit+ as n       { control_sequence (int_of_string n::l) lexbuf } 
     | 'm'               { CMD (List.rev l) }

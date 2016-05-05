@@ -95,6 +95,9 @@ let rec cat res = function
 let interp_line style line = 
   let rec aux (res, rem) = function
     | [] -> cat res rem
+    (* FIXME : Err_J shouldn't be handled like that *)
+    | Errase Err_K :: q | Errase Err_J :: q ->
+        aux (res, []) q
     | Cr :: q ->
         aux ([], cat res rem) q
     | Text txt :: q ->

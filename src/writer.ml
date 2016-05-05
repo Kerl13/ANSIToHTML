@@ -52,7 +52,7 @@ let write_text oc txt =
    "<span style=\"%s\" class=\"%s\">%s</span>" styles classes txt.content
 
 let write_line oc line =
-  List.iter (write_text oc) line;
+  List.iter (write_text oc) (List.rev line);
   Printf.fprintf oc "\n"
 
 let write_script oc script =

@@ -28,9 +28,17 @@ let default_style () =
                 hidden = false } in
   { color = White ; bg = NoColor ; deco = deco }
 
+(* Types of ANSI commands *)
+
+type errase_code = Err_K | Err_J
+
 (* Types of parsed files *)
 
-type pword = CtrlSeq of int list | Text of string | Cr
+type pword =
+  | CtrlSeq of int list 
+  | Text of string
+  | Cr
+  | Errase of errase_code
 
 type pline = pword list
 
