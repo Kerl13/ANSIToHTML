@@ -53,12 +53,16 @@ let rec interp_style style = function
                   interp_style style codes
   | 36::codes ->  style.color <- Cyan;
                   interp_style style codes
+  | 37::codes ->  style.color <- LightGray;
+                  interp_style style codes
   | 39::codes ->  style.color <- White;
                   interp_style style codes
   | 90::_ | 91::_ | 92::_ | 93::_ | 94::_ | 95::_ | 96::_ -> fail "Light ..."
   | 97::codes ->  style.color <- White;
                   interp_style style codes
   (* Background TODO *)
+  | 41::codes ->  style.bg <- Red;
+                  interp_style style codes
   (* 88/256 Colors *)
   | 38::5::col::codes ->  style.color <- color256 col;
                           interp_style style codes
@@ -66,10 +70,6 @@ let rec interp_style style = function
   | 48::5::col::codes ->  style.bg <- color256 col;
                           interp_style style codes
   | n::_ ->  raise (Invalid_argument (string_of_int n))
-
-let print_style style =
-  let col = Writer.show_color in
-  Printf.printf "{ %s ; %s ; ... }\n" (col style.color) (col style.bg)
 
 let cont w (res, rem) =
   let rec del_len len = function

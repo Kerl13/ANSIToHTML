@@ -9,8 +9,13 @@ let show_color = function
   | Yellow -> "yellow"
   | Cyan -> "cyan"
   | Magenta -> "magenta"
+  | LightGray -> "light-gray"
   | RGB _ -> raise (Invalid_argument "show_color: RGB")
   | NoColor -> "nocolor"
+
+let print_style style =
+  let col = show_color in
+  Printf.printf "{ %s ; %s ; ... }\n" (col style.color) (col style.bg)
 
 let get_color (styles, classes) = function
   | RGB(r,g,b) ->
@@ -34,16 +39,18 @@ let get_deco (styles, classes) deco =
   let classes = 
     ((add "bold " deco.bold) &
     (add "underlined " deco.underlined) &
-    (add "reverse " deco.reverse) &
     (add "hidden " deco.hidden)) classes in
   styles, classes
 
 let write_text oc txt =
   (* Getting attributes
    * (styles*classes) *)
-  let attr = ([], []) in
-  let attr = get_color attr txt.properties.color in
-  let attr = get_bgcolor attr txt.properties.bg in
+  let attr = if txt.properties.deco.reverse then
+    let attr = get_bgcolor ([],[]) txt.properties.color in
+    get_color attr txt.properties.bg
+  else
+    let attr = get_color ([],[]) txt.properties.color in
+    get_bgcolor attr txt.properties.bg in
   let attr = get_deco attr txt.properties.deco in
   (* Printing *)
   let styles = String.concat " " (fst attr) in

@@ -3,6 +3,7 @@
 type color =
   | Black | White
   | Red | Green | Blue | Yellow | Cyan | Magenta
+  | LightGray
   | RGB of int * int * int
   | NoColor
 
@@ -17,9 +18,14 @@ type style = {
   mutable bg    : color ;
   deco          : deco }
 
-let copy s () = {  color = s.color ;
-                bg = s.bg ;
-                deco = s.deco }
+let copy_deco d () = {  bold = d.bold ;
+                        underlined = d.underlined ;
+                        reverse = d.reverse ;
+                        hidden = d.hidden }
+
+let copy s () = { color = s.color ;
+                  bg = s.bg ;
+                  deco = copy_deco s.deco () }
 
 let default_style () = 
   let deco = {  bold = false ;
