@@ -3,7 +3,7 @@ open Types
 let fail s = failwith (s^" not handled yet")
 
 let color256 = function
-  | 130 -> RGB (166,73,0)
+  | 130 -> RGB (216,115,0)
   | n -> raise (Invalid_argument (string_of_int n))
 
 let rec interp_style style = function
@@ -92,6 +92,8 @@ let rec cat res = function
   | [] -> res
   | t::q -> cat (t::res) q
 
+let cat_rev res rem = cat rem res
+
 let interp_line style line = 
   let rec aux (res, rem) = function
     | [] -> cat res rem
@@ -99,7 +101,7 @@ let interp_line style line =
     | Errase Err_K :: q | Errase Err_J :: q ->
         aux (res, []) q
     | Cr :: q ->
-        aux ([], cat res rem) q
+        aux ([], cat_rev res rem) q
     | Text txt :: q ->
         let style' = copy style () in
         aux (cont { content = txt ; properties = style' } (res, rem)) q
