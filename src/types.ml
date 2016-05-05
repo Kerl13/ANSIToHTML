@@ -3,7 +3,7 @@
 type color =
   | Black | White
   | Red | Green | Blue | Yellow | Cyan | Magenta
-  | LightGray
+  | LightGray | LightRed
   | RGB of int * int * int
   | NoColor
 
@@ -43,7 +43,7 @@ type errase_code = Err_K | Err_J
 type pword =
   | CtrlSeq of int list 
   | Text of string
-  | Cr
+  | Cr | Bs
   | Errase of errase_code
 
 type pline = pword list

@@ -3,8 +3,11 @@ open Types
 let fail s = failwith (s^" not handled yet")
 
 let color256 = function
-  | 130 -> RGB (216,115,0)
-  | n -> raise (Invalid_argument (string_of_int n))
+  | 26  -> RGB(23,79,218)
+  | 130 -> RGB(216,115,0)
+  | 240 -> RGB(88,88,88)
+  | 245 -> RGB(138,138,138)
+  | n -> raise (Invalid_argument ("Color256: "^(string_of_int n)))
 
 let rec interp_style style = function
   | [] -> ()
@@ -57,7 +60,9 @@ let rec interp_style style = function
                   interp_style style codes
   | 39::codes ->  style.color <- White;
                   interp_style style codes
-  | 90::_ | 91::_ | 92::_ | 93::_ | 94::_ | 95::_ | 96::_ -> fail "Light ..."
+  | 90::_ | 92::_ | 93::_ | 94::_ | 95::_ | 96::_ -> fail "Light ..."
+  | 91::codes ->  style.color <- LightRed;
+                  interp_style style codes
   | 97::codes ->  style.color <- White;
                   interp_style style codes
   (* Background TODO *)
@@ -94,6 +99,16 @@ let rec cat res = function
 
 let cat_rev res rem = cat rem res
 
+let backspace = function
+  | [] -> []
+  | w::res ->
+      let len = String.length w.content in
+      if len > 1 then
+        let w' = {  content = String.sub w.content 0 (len-1) ;
+                    properties = copy w.properties () } in
+        w'::res
+      else res
+
 let interp_line style line = 
   let rec aux (res, rem) = function
     | [] -> cat res rem
@@ -102,6 +117,7 @@ let interp_line style line =
         aux (res, []) q
     | Cr :: q ->
         aux ([], cat_rev res rem) q
+    | Bs :: q -> aux (backspace res, rem) q
     | Text txt :: q ->
         let style' = copy style () in
         aux (cont { content = txt ; properties = style' } (res, rem)) q

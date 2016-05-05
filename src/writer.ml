@@ -10,6 +10,7 @@ let show_color = function
   | Cyan -> "cyan"
   | Magenta -> "magenta"
   | LightGray -> "light-gray"
+  | LightRed -> "light-red"
   | RGB _ -> raise (Invalid_argument "show_color: RGB")
   | NoColor -> "nocolor"
 

@@ -7,7 +7,8 @@
 %token <int list> CMD
 %token <string> STR
 %token ERRASE_J ERRASE_K
-%token EOL EOF CR
+%token CR BS
+%token EOL EOF
 
 /* Points d'entrée de la grammaire */
 %start file
@@ -25,6 +26,7 @@ word:
   | codes = CMD { CtrlSeq codes }
   | text = STR { Text text }
   | CR { Cr }
+  | BS { Bs }
   | ERRASE_J { Errase Err_J }
   | ERRASE_K { Errase Err_K }
 

@@ -25,7 +25,7 @@ rule token = parse
     | '\n'              { newline lexbuf; EOL }
     | '\r'              { CR }
     | '\007'            { token lexbuf } (* BEL *)
-    | '\008'            { token lexbuf } (* BS -> ??? *)
+    | '\008'            { BS }           (* Backspace *)
     | '\027'            { escaped lexbuf }
     | regular+ as s     { STR s }
     | eof               { EOF }
@@ -35,8 +35,14 @@ and escaped = parse
     | '['               { control_sequence [] lexbuf }
     | '>'               { token lexbuf }
     | '='               { token lexbuf }
-    | ']'               { token lexbuf }
+    | ']'               { osc lexbuf }
+    | ['(' ')'] ['A' 'B' '0'-'2']        (* character sets... not handled *)
+                        { token lexbuf }
     | _ as c            { error "Unknown escaped character" c }
+
+and osc = parse         (* Don't realy know if correct *)
+    | '\007'            { token lexbuf }
+    | _                 { osc lexbuf }	  
 
 and control_sequence l = parse
     | '?' digit+ 'h'    { token lexbuf } (* ??? *)
@@ -46,4 +52,5 @@ and control_sequence l = parse
     | (digit+ as n) ';' { control_sequence (int_of_string n::l) lexbuf }
     | digit+ as n       { control_sequence (int_of_string n::l) lexbuf } 
     | 'm'               { CMD (List.rev l) }
+    | _ as c            { error "Unknown control sequence" c }
 
