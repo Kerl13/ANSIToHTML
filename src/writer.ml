@@ -1,63 +1,39 @@
 open Types
 
-let show_color = function
-  | White -> "white"
-  | Black -> "black"
-  | Red -> "red"
-  | Green -> "green"
-  | Blue -> "blue"
-  | Yellow -> "yellow"
-  | Cyan -> "cyan"
-  | Magenta -> "magenta"
-  | LightGray -> "light-gray"
-  | LightRed -> "light-red"
-  | Hex _ -> raise (Invalid_argument "show_color: Hex")
-  | NoColor -> "nocolor"
-
-let print_style style =
-  let col = show_color in
-  Printf.printf "{ %s ; %s ; ... }\n" (col style.color) (col style.bg)
-
-let get_color (styles, classes) = function
+let get_color style = function
   | Hex hcode ->
-      Printf.sprintf "color: #%s;" hcode::styles,
-      classes
-  | col -> 
-      styles ,
-      (show_color col)::classes
+      Printf.sprintf "color: #%s;" hcode :: style
+  | NoColor ->
+      assert false
 
-let get_bgcolor (styles, classes) = function
+let get_bgcolor style = function
   | Hex hcode ->
-      Printf.sprintf "background: #%s;" hcode::styles,
-      classes
-  | col -> 
-      styles ,
-      ("bg-"^(show_color col))::classes
+      Printf.sprintf "background: #%s;" hcode :: style
+  | NoColor ->
+      Printf.sprintf "background: transparent" :: style
 
-let get_deco (styles, classes) deco = 
+let get_deco classes deco = 
   let add s b l = if b then s::l else l in
   let (&) f g = fun x -> f (g x) in
-  let classes = 
-    ((add "bold " deco.bold) &
-    (add "underlined " deco.underlined) &
-    (add "hidden " deco.hidden)) classes in
-  styles, classes
+  ((add "bold " deco.bold) &
+  (add "underlined " deco.underlined) &
+  (add "hidden " deco.hidden)) classes
 
 let write_text oc txt =
   (* Getting attributes
    * (styles*classes) *)
-  let attr = if txt.properties.deco.reverse then
-    let attr = get_bgcolor ([],[]) txt.properties.color in
-    get_color attr txt.properties.bg
+  let style = if txt.properties.deco.reverse then
+    let style = get_bgcolor [] txt.properties.color in
+    get_color style txt.properties.bg
   else
-    let attr = get_color ([],[]) txt.properties.color in
-    get_bgcolor attr txt.properties.bg in
-  let attr = get_deco attr txt.properties.deco in
+    let style = get_color [] txt.properties.color in
+    get_bgcolor style txt.properties.bg in
+  let classes = get_deco [] txt.properties.deco in
   (* Printing *)
-  let styles = String.concat " " (fst attr) in
-  let classes = String.concat " " (snd attr) in
+  let style = String.concat " " style in
+  let classes = String.concat " " classes in
   Printf.fprintf oc
-   "<span style=\"%s\" class=\"%s\">%s</span>" styles classes txt.content
+   "<span style=\"%s\" class=\"%s\">%s</span>" style classes txt.content
 
 let write_line oc line =
   List.iter (write_text oc) (List.rev line);

@@ -1,11 +1,6 @@
 (* Style types *)
 
-type color =
-  | Black | White
-  | Red | Green | Blue | Yellow | Cyan | Magenta
-  | LightGray | LightRed
-  | Hex of string
-  | NoColor
+type color = Hex of string | NoColor
 
 type deco = {
   mutable bold : bool ;
@@ -32,7 +27,7 @@ let default_style () =
                 underlined = false ;
                 reverse = false ;
                 hidden = false } in
-  { color = White ; bg = NoColor ; deco = deco }
+  { color = Hex "ffffff" ; bg = NoColor ; deco = deco }
 
 (* Types of ANSI commands *)
 
