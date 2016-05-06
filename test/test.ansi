@@ -1,6 +1,29 @@
-Script started on Thu 05 May 2016 04:33:37 PM CEST
-[1m[7m%[27m[1m[0m                                                                                                     [0m[27m[24m[J[38;5;130mMartin@pls ~ % [39m[K[?1h=lls[?1l>
-[0m[01;36mbackup[0m  [01;36mbin[0m  [01;36mCompil[0m  [01;36mGHA[0m  [01;36mHaskell[0m  [00mmbox[0m  [35mnotes.pdf[0m  [01;36mOcaml[0m  [01;36mpandoc_boilerplate[0m  [00mtypescript[0m  [01;36mwww[0m
-[1m[7m%[27m[1m[0m                                                                                                     [0m[27m[24m[J[38;5;130mMartin@pls ~ % [39m[K[?1h=
+Script started on Fri 06 May 2016 02:26:18 AM CEST
+[1m[7m%[27m[1m[0m                                                                                                     [0m[27m[24m[J[38;5;130mKerl@host ~ % [39m[K[?1h=ccd Ocaml[1m/[0m[0m [?1l>
+[1m[7m%[27m[1m[0m                                                                                                     [0m[27m[24m[J[38;5;130mKerl@host ~/Ocaml % [39m[K[?1h=lls[?1l>
+[0m[01;36mANSIToHTML[0m  [01;36meurostat_converter[0m  [01;36mtest[0m
+[1m[7m%[27m[1m[0m                                                                                                     [0m[27m[24m[J[38;5;130mKerl@host ~/Ocaml % [39m[K[?1h=ccd AnNSIToHTML[1m/[0m[0m [?1l>
+[1m[7m%[27m[1m[0m                                                                                                     [0m[27m[24m[J[38;5;130mKerl@host ~/Ocaml/ANSIToHTML % [39m[K[?1h=l[?1l>
+zsh: command not found: l
+[1m[7m%[27m[1m[0m                                                                                                     [0m[27m[24m[J[38;5;130mKerl@host ~/Ocaml/ANSIToHTML % [39m[K[?1h=lls[?1l>
+[0m[01;36mdata[0m  [00mMakefile[0m  [00mREADME.md[0m  [01;36msrc[0m  [00m_tags[0m  [01;36mtest[0m
+[1m[7m%[27m[1m[0m                                                                                                     [0m[27m[24m[J[38;5;130mKerl@host ~/Ocaml/ANSIToHTML % [39m[K[?1h=ggit pull[?1l>
+remote: Counting objects: 6, done.[K
+remote: Compressing objects:  50% (1/2)   [Kremote: Compressing objects: 100% (2/2)   [Kremote: Compressing objects: 100% (2/2), done.[K
+remote: Total 6 (delta 4), reused 6 (delta 4), pack-reused 0[K
+Unpacking objects:  16% (1/6)   Unpacking objects:  33% (2/6)   Unpacking objects:  50% (3/6)   Unpacking objects:  66% (4/6)   Unpacking objects:  83% (5/6)   Unpacking objects: 100% (6/6)   Unpacking objects: 100% (6/6), done.
+From https://github.com/Kerl13/ANSIToHTML
+   f7e00e0..8a271d2  master     -> origin/master
+Updating f7e00e0..8a271d2
+Fast-forward
+ Makefile          |  2 [32m+[m[31m-[m
+ src/ansitohtml.ml | 57 [32m++++++++++++++++++++++++++++++++++++++++++++++++++++[m[31m-----[m
+ src/writer.ml     | 12 [32m++++++++[m[31m----[m
+ 3 files changed, 61 insertions(+), 10 deletions(-)
+[1m[7m%[27m[1m[0m                                                                                                     [0m[27m[24m[J[38;5;130mKerl@host ~/Ocaml/ANSIToHTML % [39m[K[?1h=mmake[?1l>
+ocamlbuild -cflags -w,+A-4 src/ansitohtml.native
+00:00:00 0    (0   ) STARTING                                                             -------- |[K00:00:00 2    (0   ) src/interp.ml.depends                                                O------- |[K00:00:00 5    (0   ) src/lexer.mll                                                        O-b----- |[K00:00:00 7    (0   ) src/parser.mly.depends                                               O-b----- |[K00:00:00 8    (0   ) src/parser.mly                                                       O-B----- /[K00:00:00 12   (0   ) src/interp.cmo                                                       O-B---i- /[K00:00:00 12   (0   ) src/interp.cmo                                                       O-B---i- /[K00:00:00 13   (0   ) src/lexer.cmo                                                        O-B---i- /[K00:00:00 15   (0   ) src/ansitohtml.cmo                                                   O-B---i- -[K00:00:00 16   (0   ) src/types.cmx                                                        ONb---i- -[K00:00:00 18   (0   ) src/parser.cmx                                                       ONb---i- \[K00:00:00 19   (0   ) src/interp.cmx                                                       ONb---i- \[K00:00:01 20   (0   ) src/lexer.cmx                                                        ONb---i- |[K00:00:01 21   (0   ) src/writer.cmx                                                       ONb---i- |[K00:00:01 22   (0   ) src/ansitohtml.cmx                                                   ONb---i- |[K00:00:01 23   (0   ) src/ansitohtml.native                                                ONbP--iL /[K00:00:01 23   (0   ) src/ansitohtml.native                                                ONbP--iL /[KFinished, 23 targets (0 cached) in 00:00:01.[K
+./ansitohtml.native -s -i test/test.ansi -o test.html
+[1m[7m%[27m[1m[0m                                                                                                     [0m[27m[24m[J[38;5;130mKerl@host ~/Ocaml/ANSIToHTML % [39m[K[?1h=eexit[?1l>
 
-Script done on Thu 05 May 2016 04:33:39 PM CEST
+Script done on Fri 06 May 2016 02:26:52 AM CEST
