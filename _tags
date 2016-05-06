@@ -1,3 +1,4 @@
 <src>: include
 
+true: warn(A-4)
 true: use_menhir
