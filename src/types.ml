@@ -4,7 +4,7 @@ type color =
   | Black | White
   | Red | Green | Blue | Yellow | Cyan | Magenta
   | LightGray | LightRed
-  | RGB of int * int * int
+  | Hex of string
   | NoColor
 
 type deco = {

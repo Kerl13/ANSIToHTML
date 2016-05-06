@@ -11,7 +11,7 @@ let show_color = function
   | Magenta -> "magenta"
   | LightGray -> "light-gray"
   | LightRed -> "light-red"
-  | RGB _ -> raise (Invalid_argument "show_color: RGB")
+  | Hex _ -> raise (Invalid_argument "show_color: Hex")
   | NoColor -> "nocolor"
 
 let print_style style =
@@ -19,16 +19,16 @@ let print_style style =
   Printf.printf "{ %s ; %s ; ... }\n" (col style.color) (col style.bg)
 
 let get_color (styles, classes) = function
-  | RGB(r,g,b) ->
-      Printf.sprintf "color: rgb(%d,%d,%d);" r g b::styles,
+  | Hex hcode ->
+      Printf.sprintf "color: #%s;" hcode::styles,
       classes
   | col -> 
       styles ,
       (show_color col)::classes
 
 let get_bgcolor (styles, classes) = function
-  | RGB(r,g,b) ->
-      Printf.sprintf "background: rgb(%d,%d,%d);" r g b::styles,
+  | Hex hcode ->
+      Printf.sprintf "background: #%s;" hcode::styles,
       classes
   | col -> 
       styles ,
