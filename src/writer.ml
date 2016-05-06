@@ -10,7 +10,7 @@ let get_bgcolor style = function
   | Hex hcode ->
       Printf.sprintf "background: #%s;" hcode :: style
   | NoColor ->
-      Printf.sprintf "background: transparent" :: style
+      Printf.sprintf "background: transparent;" :: style
 
 let get_deco classes deco = 
   let add s b l = if b then s::l else l in
@@ -40,19 +40,22 @@ let write_line oc line =
   Printf.fprintf oc "\n"
 
 let write_script oc script =
-  Printf.fprintf oc "<pre>\n";
+  Printf.fprintf oc "<pre style=\"%s\">\n"
+    ("background: #111; padding: 1% 2%; max-width: 1000px; " ^
+     "margin: auto; border-radius: 3px; border: 4px solid #666;");
   List.iter (write_line oc) script;
   Printf.fprintf oc "</pre>\n"
 
 let write_header oc = 
-  let ic = open_in "data/header.html" in
-  let rec copy () =
-    try
-      let line = input_line ic in
-      Printf.fprintf oc "%s\n" line;
-      copy ()
-    with End_of_file -> () in copy ();
-  close_in ic
-
+  Printf.fprintf oc "%s%s"
+    "<!DOCTYPE html>\n<html>\n<head>\n"
+    "\t<title>ANSI to HTML</title>\n\t<meta charset=\"UTF-8\" />\n";
+  Printf.fprintf oc "%s%s%s%s"
+    "\t<style>\n\t\thtml { background: #555; }"
+    "\t\t.bold { font-weight: bold }\n"
+    "\t\t.underlined { text-decoration: underline; }\n"
+    "\t\t.hidden { display: none; }\n\t</style>\n</head>";
+  Printf.fprintf oc "<body>\n"
+    
 let write_footer oc = Printf.fprintf oc "</body>\n</html>\n\n"
 

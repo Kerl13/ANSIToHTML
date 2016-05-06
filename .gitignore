@@ -1,4 +1,5 @@
 _build
 test.html
 *.native
+ansitohtml
 *.swp
