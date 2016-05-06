@@ -64,6 +64,11 @@ let write_line oc line =
   Printf.fprintf oc "\n"
 
 let write_script oc script =
+  Printf.fprintf oc "<pre>\n";
+  List.iter (write_line oc) script;
+  Printf.fprintf oc "</pre>\n"
+
+let write_header oc = 
   let ic = open_in "data/header.html" in
   let rec copy () =
     try
@@ -71,8 +76,7 @@ let write_script oc script =
       Printf.fprintf oc "%s\n" line;
       copy ()
     with End_of_file -> () in copy ();
-  close_in ic;
-  Printf.fprintf oc "<body>\n<pre>\n";
-  List.iter (write_line oc) script;
-  Printf.fprintf oc "</pre>\n</body>"
+  close_in ic
+
+let write_footer oc = Printf.fprintf oc "</body>\n</html>\n\n"
 
