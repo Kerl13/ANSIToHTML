@@ -33,6 +33,7 @@ rule token = parse
 
 and escaped = parse
     | '['               { control_sequence [] lexbuf }
+    | "[m"              { CMD [0] }
     | '>'               { token lexbuf }
     | '='               { token lexbuf }
     | ']'               { osc lexbuf }
@@ -50,6 +51,7 @@ and control_sequence l = parse
     | 'K'               { ERRASE_K }
     | 'J'               { ERRASE_J }
     | (digit+ as n) ';' { control_sequence (int_of_string n::l) lexbuf }
+    | ';'               { control_sequence (0::l) lexbuf }
     | digit+ as n       { control_sequence (int_of_string n::l) lexbuf } 
     | 'm'               { CMD (List.rev l) }
     | _ as c            { error "Unknown control sequence" c }
