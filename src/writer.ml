@@ -51,7 +51,7 @@ let write_header oc =
     "<!DOCTYPE html>\n<html>\n<head>\n"
     "\t<title>ANSI to HTML</title>\n\t<meta charset=\"UTF-8\" />\n";
   Printf.fprintf oc "%s%s%s%s"
-    "\t<style>\n\t\thtml { background: #555; }"
+    "\t<style>\n\t\thtml { background: #555; }\n"
     "\t\t.bold { font-weight: bold }\n"
     "\t\t.underlined { text-decoration: underline; }\n"
     "\t\t.hidden { display: none; }\n\t</style>\n</head>";

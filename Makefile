@@ -1,4 +1,5 @@
 BIN = ansitohtml
+EXAMPLES = $(wildcard test/*)
 
 compile:
 	ocamlbuild src/$(BIN).native
@@ -6,7 +7,7 @@ compile:
 	@echo "ansitohtml "successfully" built."
 
 test: compile
-	./$(BIN) -s -i test/test.ansi -i test/test2.ansi -o test.html
+	./$(BIN) -s $(addprefix -i ,$(EXAMPLES)) -o test.html
 
 clean:
 	ocamlbuild -clean
