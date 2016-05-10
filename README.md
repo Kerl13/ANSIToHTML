@@ -27,19 +27,18 @@ file. If not set, only a `<pre>` HTML element will be produced.
 
 _NB:_ on Unix platforms, ANSI code can be obtained with the `script` utility.
 
-* A complete example:
+### A complete example:
 
     prompt> script
     Script started, output file is typescript
-   
     prompt> ... [you type whatever you want...]
     prompt> exit
     Script done, output file is typescript
-   
     ansitohtml -i typescript -o my-session.html
 
-* An other example: run `make test` to see another example using the files
-  given in `test/`
+### An other example
+
+Run `make test` to see another example using the files given in `test/`
 
 ## And then
 
