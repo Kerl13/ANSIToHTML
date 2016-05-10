@@ -36,7 +36,7 @@ let color256 = function
       let b' = n % 6 in let b = calc 1 b' in
       let g' = (n-b')%36 in let g = calc 6 g' in
       let r' = n-b'-g' in let r = calc 36 r' in
-      Hex (Printf.sprintf "%x%x%x" r g b)
+      Hex (Printf.sprintf "%02x%02x%02x" r g b)
   (* Grey scale *)
   | 232 -> Hex "080808"
   | 233 -> Hex "121212"
